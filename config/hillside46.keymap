@@ -23,6 +23,51 @@
 #define Redo   LC(Y)
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        Enter {
+            bindings = <&kp KP_ENTER>;
+            key-positions = <19 20>;
+        };
+
+        AltTab {
+            bindings = <&kp LA(TAB)>;
+            key-positions = <6 7>;
+        };
+
+        capslock {
+            bindings = <&kp CAPSLOCK>;
+            key-positions = <44 39>;
+        };
+
+        bangit {
+            bindings = <&kp F5>;
+            key-positions = <41 42>;
+        };
+
+        screenshot {
+            bindings = <&wScreenShot>;
+            key-positions = <40 43>;
+        };
+    };
+
+    macros {
+        wPCUnlock: wPCUnlock {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&none &kp LS(R) &kp E &kp N &kp N &kp A &kp T &kp R &kp E &kp K &kp A &kp B &kp N1 &kp N3 &kp N2 &kp N1 &kp N1 &kp RET>;
+            label = "WPCUNLOCK";
+        };
+
+        wScreenShot: wScreenShot {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp RC(RS(ENTER))>;
+            label = "WSCREENSHOT";
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
@@ -41,8 +86,6 @@
 &sk LEFT_GUI  &kp Z  &kp X  &kp C  &kp V      &kp B           &tog 1                                 &tog 2       &kp N      &kp M      &kp COMMA  &kp DOT  &kp SLASH  &kp BACKSLASH
                                    &sk LCTRL  &sk LEFT_SHIFT  &lt 1 TAB  &kp BACKSPACE    &kp SPACE  &lt 2 MINUS  &sk RSHFT  &sk RCTRL
             >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
 
         navNum {
@@ -55,13 +98,11 @@
  */
 
             bindings = <
-&kp Copy  &kp N1    &kp LG(LEFT_ARROW)  &kp LG(UP_ARROW)  &kp LG(RIGHT_ARROW)  &none                                        &none         &kp N7        &kp N8        &kp N9        &none  &none
-&kp Cut   &kp LGUI  &kp LEFT_ARROW      &kp UP_ARROW      &kp RIGHT_ARROW      &none                                        &none         &kp NUMBER_4  &kp N5        &kp NUMBER_6  &none  &none
-&trans    &kp F1    &kp F2              &kp DOWN_ARROW    &kp F4               &none   &kp Undo                   &kp Redo  &none         &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &none  &none
-                                                          &trans               &trans  &trans    &trans    &mo 4  &trans    &kp NUMBER_0  &trans
+&none  &none           &kp LG(LEFT_ARROW)  &kp LG(UP_ARROW)  &kp LG(RIGHT_ARROW)  &kp LEFT_BRACE                                            &kp RIGHT_BRACE        &kp N7        &kp N8        &kp N9        &none          &none
+&none  &sk LEFT_SHIFT  &kp LEFT_ARROW      &kp UP_ARROW      &kp RIGHT_ARROW      &kp LEFT_BRACKET                                          &kp RIGHT_BRACKET      &kp NUMBER_4  &kp N5        &kp NUMBER_6  &none          &none
+&none  &none           &kp LC(LEFT_ARROW)  &kp DOWN_ARROW    &kp LC(RIGHT_ARROW)  &kp LEFT_PARENTHESIS  &none                    &none      &kp RIGHT_PARENTHESIS  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_DIVIDE  &none
+                                                             &trans               &trans                &trans  &trans    &none  &kp MINUS  &kp NUMBER_0           &kp PERIOD
             >;
-
-            sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         sym_layer {
@@ -75,12 +116,10 @@
 
             bindings = <
 &kp INS  &kp EXCL  &kp AT     &kp HASH   &kp DOLLAR  &kp PERCENT                                        &kp CARET   &kp AMPS      &kp ASTRK     &kp LPAR  &kp RPAR  &kp DEL
-&none    &kp BSLH  &kp MINUS  &kp EQUAL  &kp LBKT    &kp RBKT                                           &kp HOME    &kp RSHFT     &kp RCTRL     &kp LALT  &kp RGUI  &kp END
+&none    &kp BSLH  &kp MINUS  &kp EQUAL  &kp LBKT    &kp RBKT                                           &wPCUnlock  &kp RSHFT     &kp RCTRL     &kp LALT  &kp RGUI  &kp END
 &trans   &kp PIPE  &kp UNDER  &kp PLUS   &kp LBRC    &kp RBRC     &sk RALT                   &kp K_APP  &kp C_MUTE  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_PP  &none     &kp RCTRL
                                          &trans      &trans       &trans    &mo 4    &trans  &trans     &trans      &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp PG_UP PG_DN &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         adj_layer {
@@ -93,13 +132,11 @@
  */
 
             bindings = <
-&none   &to 0         &to 0         &to 0         &none         &none                                               &none   &kp F11  &kp F12       &kp PRINTSCREEN  &ext_power EP_OFF  &ext_power EP_ON
-&reset  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                        &none   &none    &none         &none            &none              &reset
-&none   &kp LGUI      &kp LALT      &kp LCTRL     &kp LSHIFT    &none         &bt BT_CLR                    &none   &none   &none    &out OUT_USB  &out OUT_BLE     &none              &bootloader
-                                                  &trans        &trans        &trans      &trans    &trans  &trans  &trans  &trans
+&none       &to 0         &to 0         &to 0         &none         &none                                               &none   &kp F11  &kp F12       &kp PRINTSCREEN  &ext_power EP_OFF  &ext_power EP_ON
+&sys_reset  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4                                        &none   &none    &none         &none            &none              &sys_reset
+&none       &kp LGUI      &kp LALT      &kp LCTRL     &kp LSHIFT    &none         &bt BT_CLR                    &none   &none   &none    &out OUT_USB  &out OUT_BLE     &none              &bootloader
+                                                      &trans        &trans        &trans      &trans    &trans  &trans  &trans  &trans
             >;
-
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
         };
     };
 };
